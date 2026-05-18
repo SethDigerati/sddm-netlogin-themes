@@ -2,6 +2,7 @@
 
 import QtQuick 2.0
 import QtQuick.LocalStorage 2.0
+import Qt.labs.folderlistmodel 2.15
 
 
 
@@ -137,26 +138,6 @@ Rectangle {
         }
     }
 
-
-    // open background (wallpaper) menu
-    function openBackgroundMenu() {
-        centralpanel.visible = false;
-        bgmenu.visible = true;
-        bgmenu.init();
-        bgmenu.focus = true;
-    }
-
-    // switch background image
-    function switchBackground(index) {
-        var bgStr = config.stringValue("backgrounds");
-        if (!bgStr) return;
-        var bgList = bgStr.split(",");
-        if (index < 0 || index >= bgList.length) return;
-        bgImage.source = Qt.resolvedUrl("backgrounds/" + bgList[index].trim());
-        saveBgIndex(index);
-    }
-
-
     function getBgIndex() {
         try {
             var db = LocalStorage.openDatabaseSync("NetLoginRed", "", "Background", 1);
@@ -213,6 +194,15 @@ Rectangle {
 
     // do actions when main component has completed
     Component.onCompleted: {
+        // populate bgFileList from FolderListModel
+        var list = [];
+        for (var i = 0; i < bgFolderModel.count; i++)
+            list.push(bgFolderModel.get(i, "fileName"));
+        bgFileList = list;
+        if (bgmenu && list.length > 1) {
+            bgmenu.items_count = list.length;
+            bgmenu.reload();
+        }
         // restore saved background
         var idx = getBgIndex();
         if (idx >= 0)
@@ -222,6 +212,49 @@ Rectangle {
     }
 
 
+
+// BACKGROUND FILE SCANNER
+
+
+
+// BACKGROUND FILE SCANNER
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    property var bgFileList: []
+
+    FolderListModel {
+        id: bgFolderModel
+        folder: Qt.resolvedUrl("backgrounds")
+        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.bmp"]
+        showDirs: false
+        showDotAndDotDot: false
+        onCountChanged: {
+            var list = [];
+            for (var i = 0; i < count; i++)
+                list.push(bgFolderModel.get(i, "fileName"));
+            bgFileList = list;
+            if (typeof bgmenu !== "undefined" && bgmenu.items_count !== list.length) {
+                bgmenu.items_count = list.length;
+                if (list.length > 1)
+                    bgmenu.reload();
+            }
+        }
+    }
+
+    function switchBackground(index) {
+        if (index < 0 || index >= bgFileList.length) return;
+        bgImage.source = Qt.resolvedUrl("backgrounds/" + bgFileList[index]);
+        saveBgIndex(index);
+    }
+
+    function openBackgroundMenu() {
+        centralpanel.visible = false;
+        bgmenu.visible = true;
+        bgmenu.init();
+        bgmenu.focus = true;
+    }
 
 
 
@@ -448,15 +481,10 @@ Rectangle {
         item_index: 0
 
         menu_type: "background"
+        itemDataModel: bgFileList
 
         Component.onCompleted: {
             bgmenu.closeMenu = mainroot.closeMenu;
-            var bgStr = config.stringValue("backgrounds");
-            if (bgStr) {
-                bgmenu.items_count = bgStr.split(",").length;
-                if (bgmenu.items_count > 0)
-                    bgmenu.reload();
-            }
         }
     }
 

@@ -75,6 +75,9 @@ Item { // this was Rectangle
     // menu type (session, layout, userlist, background)
     property string menu_type: ""
 
+    // external data model for menu labels (used by background type)
+    property var itemDataModel: []
+
 
 
     // function to set hovered item
@@ -172,11 +175,7 @@ Item { // this was Rectangle
                         break;
                     // for background (wallpaper) menu
                     case "background":
-                        var bgStr = config.stringValue("backgrounds");
-                        if (bgStr) {
-                            var list = bgStr.split(",");
-                            btn.menu_item_label = i < list.length ? list[i].trim() : "";
-                        }
+                        btn.menu_item_label = i < itemDataModel.length ? itemDataModel[i] : "";
                         break;
                 }
             }

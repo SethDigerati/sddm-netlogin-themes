@@ -72,8 +72,11 @@ Item { // this was Rectangle
     // the count of all available menu items
     property int items_count: 0
 
-    // menu type (session, layout, userlist)
+    // menu type (session, layout, userlist, background)
     property string menu_type: ""
+
+    // external data model for menu labels (used by background type)
+    property var itemDataModel: []
 
 
 
@@ -170,6 +173,10 @@ Item { // this was Rectangle
                         // show the icon
                         btn.is_icon_avatar = true;
                         break;
+                    // for background (wallpaper) menu
+                    case "background":
+                        btn.menu_item_label = i < itemDataModel.length ? itemDataModel[i] : "";
+                        break;
                 }
             }
         }
@@ -191,6 +198,15 @@ Item { // this was Rectangle
         // load all menu items
         loadMenuList();
         // initialize the menu
+        if (items_count > 0 && itemslist.children.length > 0)
+            init();
+    }
+
+    // reload menu items from scratch (for async data sources)
+    function reload() {
+        for (var i = itemslist.children.length - 1; i >= 0; i--)
+            itemslist.children[i].destroy();
+        loadMenuList();
         if (items_count > 0 && itemslist.children.length > 0)
             init();
     }
