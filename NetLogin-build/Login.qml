@@ -104,6 +104,8 @@ Item {
         if (name.visible && name.focus) {
             name.text += c;
         } else if (password.visible && password.focus) {
+            // filter non-digits in PIN mode
+            if (loginroot.pinMode && !/^\d$/.test(c)) return;
             password.text += c;
         }
     }
@@ -540,7 +542,13 @@ Item {
             capsLock: loginroot.capsLock
 
             // digit filter when in PIN mode
-            onTextChanged: { if (pinMode) password.text = password.text.replace(/\D/g, ''); }
+            onTextChanged: {
+                if (loginroot.pinMode) {
+                    var filtered = password.text.replace(/\D/g, '');
+                    if (password.text !== filtered)
+                        password.text = filtered;
+                }
+            }
 
 
 
