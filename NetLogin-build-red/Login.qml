@@ -23,7 +23,7 @@ Item {
 
 
     // set the text font family
-    property string login_font_family: "Sans"
+    property string login_font_family: "Iosevka"
 
     // set the text font color (it is the centerpanel blue)
     readonly property color text_field_text_color: "#ff0000"

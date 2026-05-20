@@ -308,7 +308,7 @@ Rectangle {
     Text {
         id: messages
         // set the font and color
-        font.family: "Sans"
+        font.family: "Iosevka"
         font.pixelSize: 22
         color: "greenyellow"
 
