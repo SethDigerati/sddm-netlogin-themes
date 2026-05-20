@@ -17,7 +17,7 @@ Item {
         Text {
             anchors.centerIn: parent
             text: label
-            font.family: "Sans"; font.pixelSize: fs; font.bold: true; color: "white"
+            font.family: "Iosevka"; font.pixelSize: fs; font.bold: true; color: "white"
         }
     }
     MouseArea {

@@ -288,7 +288,7 @@ Item {
         // text is set by instance of a button origin
         text: buttonlabel
         // font family is set by the buttonroot property
-        font.family: "Sans"
+        font.family: "Iosevka"
         font.pixelSize: 20
         font.bold: true
         // this will change on mouse action

@@ -17,7 +17,7 @@ Row {
     // the color of the date and time
     readonly property color dt_color: "white"
     // the font family of the date and time
-    readonly property string dt_font_family: "Sans"
+    readonly property string dt_font_family: "Iosevka"
     // the font size in pixels
     readonly property int dt_font_size: 22
 
@@ -37,27 +37,7 @@ Row {
 
 
 
-    // hostname
-    Text {
-        // set the text font family, size and color
-        font.family: dt_font_family
-        font.pixelSize: dt_font_size
-        color: dt_color
 
-        //text: textConstants.welcomeText.arg(sddm.hostName)
-        text: sddm.hostName
-    }
-
-    // this is the separator between hostname and datetime
-    Text {
-        // set the text font family, size and color
-        font.family: dt_font_family
-        font.pixelSize: dt_font_size
-        color: dt_color
-
-        // the separator
-        text: " "
-    }
 
 
 

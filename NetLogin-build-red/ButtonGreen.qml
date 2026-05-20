@@ -273,7 +273,7 @@ Item {
         id: label
         // text is set by instance of a button origin
         text: buttonlabel
-        font.family: "Sans"
+        font.family: "Iosevka"
         font.pixelSize: 20
         font.bold: true
         color: "white"

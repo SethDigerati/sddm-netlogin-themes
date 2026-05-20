@@ -366,7 +366,7 @@ Rectangle {
             font.underline: false
             font.bold: true
             font.pixelSize: 20
-            font.family: "Sans"
+            font.family: "Iosevka"
         }
     }
 
