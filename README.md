@@ -17,11 +17,6 @@ Customized [NetLogin](https://pling.com/p/2225131/) SDDM themes with zero extern
 - 24 PNGs recolored to red hue via ImageMagick (`-colorspace gray -fill red -tint 100`)
 - Excludes files with "white", "textbox", or "warning" in the name
 
-### NetLogin (Original)
-
-- Unmodified original theme from pling.com
-- Still uses SddmComponents imports (kept for reference)
-
 ## Features
 
 ### Zero Dependencies
